@@ -344,7 +344,7 @@ Set ClickHouse port
 */}}
 {{- define "sentry.clickhouse.port" -}}
 {{- if .Values.clickhouse.enabled -}}
-{{- default 9000 .Values.clickhouse.clickhouse.tcp_port }}
+{{- default 9000 .Values.clickhouse.containerPorts.tcp }}
 {{- else -}}
 {{ required "A valid .Values.externalClickhouse.tcpPort is required" .Values.externalClickhouse.tcpPort }}
 {{- end -}}
@@ -355,7 +355,7 @@ Set ClickHouse HTTP port
 */}}
 {{- define "sentry.clickhouse.http_port" -}}
 {{- if .Values.clickhouse.enabled -}}
-{{- default 8123 .Values.clickhouse.clickhouse.http_port }}
+{{- default 8123 .Values.clickhouse.containerPorts.http }}
 {{- else -}}
 {{ required "A valid .Values.externalClickhouse.httpPort is required" .Values.externalClickhouse.httpPort }}
 {{- end -}}
@@ -377,11 +377,7 @@ Set ClickHouse User
 */}}
 {{- define "sentry.clickhouse.username" -}}
 {{- if .Values.clickhouse.enabled -}}
-  {{- if .Values.clickhouse.clickhouse.configmap.users.enabled -}}
-{{ (index .Values.clickhouse.clickhouse.configmap.users.user 0).name }}
-  {{- else -}}
-default
-  {{- end -}}
+{{- .Values.clickhouse.auth.username }}
 {{- else -}}
 {{ required "A valid .Values.externalClickhouse.username is required" .Values.externalClickhouse.username }}
 {{- end -}}
@@ -392,10 +388,7 @@ Set ClickHouse Password
 */}}
 {{- define "sentry.clickhouse.password" -}}
 {{- if .Values.clickhouse.enabled -}}
-  {{- if .Values.clickhouse.clickhouse.configmap.users.enabled -}}
-{{ (index .Values.clickhouse.clickhouse.configmap.users.user 0).config.password }}
-  {{- else -}}
-  {{- end -}}
+{{- .Values.clickhouse.auth.password }}
 {{- else -}}
 {{ .Values.externalClickhouse.password }}
 {{- end -}}
