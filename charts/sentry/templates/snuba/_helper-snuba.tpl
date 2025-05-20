@@ -43,6 +43,8 @@ settings.py: |
       "password": env("CLICKHOUSE_PASSWORD", ""),
       "max_connections": int(os.environ.get("CLICKHOUSE_MAX_CONNECTIONS", 100)),
       "database": env("CLICKHOUSE_DATABASE", "default"),
+      "cluster_name": env("CLICKHOUSE_CLUSTER_NAME", "default"),
+      "distributed_cluster_name": env("CLICKHOUSE_DISTRIBUTED_CLUSTER_NAME", "default"),
       "http_port": {{ include "sentry.clickhouse.http_port" . }},
       "storage_sets": {
           "cdc",
@@ -74,7 +76,7 @@ settings.py: |
         The default clickhouse installation runs in distributed mode, while the external
         clickhouse configured can be configured any way you choose
       */}}
-      "single_node": True
+      "single_node": False
     },
   ]
 
