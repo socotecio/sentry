@@ -2138,10 +2138,10 @@ clickhouse:
     http: 8123
     https: 8443
     tcp: 9000
-  replicaCount: 1
-  shards: 1
+  replicaCount: 3
+  shards: 2
   keeper:
-    replicaCount: 1
+    replicaCount: 3
   auth:
     username: default
     password: "thePassword"
